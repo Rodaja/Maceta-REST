@@ -63,6 +63,22 @@ public class ServiceFlowerPot {
 	public Optional<FlowerPot> findByMacAddress(String macAddress){
 		return dfp.findByMacAddressIgnoreCase(macAddress);
 	}
+	
+	/**
+	 * This method changes an existing flowerpot to the flowerpot given as a parameter
+	 * @param fp The new flowerpot
+	 * @return True if the flowerpot has changed, false in the opposite case
+	 */
+	public boolean modify(FlowerPot fp) {
+		boolean response = false;
+		
+		if (checkFlowerPot(fp)) {
+			dfp.save(fp);
+			response = true;
+		}
+		
+		return response;
+	}
 
 	
 	/**
