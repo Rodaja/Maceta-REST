@@ -48,27 +48,57 @@ public class ServiceUser {
 
 	/**
 	 * This method returns all the users persisted
+	 * 
 	 * @return A list with all the users
 	 */
-	public List<User> findAll(){
+	public List<User> findAll() {
 		return du.findAll();
 	}
-	
+
 	/**
 	 * This method finds a user by its ID
+	 * 
 	 * @param id The user ID
 	 * @return The user with that ID, null if there is no user with that ID
 	 */
 	public Optional<User> findById(Integer id) {
 		return du.findById(id);
 	}
-	
+
 	/**
 	 * This method finds a user by its email
+	 * 
 	 * @param email The email of the user
 	 * @return The user with that email, null if there is no user with that email
 	 */
 	public Optional<User> findByEmail(String email) {
 		return du.findByEmail(email);
+	}
+
+	/**
+	 * This method persist the new user given by the parameter <b>if it hasn´t the
+	 * email and the password empty</b>
+	 * 
+	 * @param u The new user to save
+	 * @return True if the new user has been persisted, false in the opposite case
+	 */
+	public boolean modify(User u) {
+		boolean response = false;
+
+		if (checkUserData(u)) {
+			du.save(u);
+			response = true;
+		}
+
+		return response;
+	}
+
+	/**
+	 * This method deletes a user by its ID
+	 * 
+	 * @param id The ID of the user to be removed
+	 */
+	public void delete(Integer id) {
+		du.deleteById(id);
 	}
 }
