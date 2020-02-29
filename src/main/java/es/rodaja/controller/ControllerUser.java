@@ -50,7 +50,7 @@ public class ControllerUser {
 		}
 
 	}
-	
+
 	@PutMapping(path = "api/users/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> modify(@PathVariable("id") Integer id, @RequestBody User userModified) {
 		Optional<User> user = su.findById(id);
@@ -64,6 +64,8 @@ public class ControllerUser {
 		}
 	}
 
+	// TODO Put or post method that allows to add a flowerpot to a given user
+
 	@DeleteMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
 		Optional<User> user = su.findById(id);
@@ -74,9 +76,10 @@ public class ControllerUser {
 			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@DeleteMapping(path = "api/users/{id}/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUserFlowerpot(@PathVariable("id") Integer id, @PathVariable("macAddress") String macAddress) {
+	public ResponseEntity<String> deleteUserFlowerpot(@PathVariable("id") Integer id,
+			@PathVariable("macAddress") String macAddress) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent() && !macAddress.isEmpty()) {
