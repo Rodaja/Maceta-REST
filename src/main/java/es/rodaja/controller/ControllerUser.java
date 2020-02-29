@@ -29,5 +29,11 @@ public class ControllerUser {
 		}
 	}
 	
+	
+	@GetMapping(path = "api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> listar() {
+		List<User> users = su.findAll();
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
 
 }
