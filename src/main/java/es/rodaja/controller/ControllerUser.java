@@ -66,7 +66,7 @@ public class ControllerUser {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent()) {
-			
+			su.removeFlowerPot(user.get(), macAddress);
 			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);
