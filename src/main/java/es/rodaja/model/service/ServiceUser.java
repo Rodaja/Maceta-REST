@@ -118,13 +118,13 @@ public class ServiceUser {
 	/**
 	 * This method removes a flowerpot of a user
 	 * @param u The user 
-	 * @param f The flowerpot to remove
+	 * @param f The flowerpot MAC address to remove
 	 */
-	public void removeFlowerPot(User u, FlowerPot f) {
+	public void removeFlowerPot(User u, String macAddress) {
 		List<FlowerPot> listFlowerPots = u.getListFlowerPots();
 		
 		for (FlowerPot flowerPot : listFlowerPots) {
-			if (flowerPot.getMacAddress().equalsIgnoreCase(f.getMacAddress())) {
+			if (flowerPot.getMacAddress().equalsIgnoreCase(macAddress)) {
 				listFlowerPots.remove(flowerPot);
 				break;
 			}
