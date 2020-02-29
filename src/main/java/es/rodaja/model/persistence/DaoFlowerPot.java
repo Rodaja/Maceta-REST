@@ -10,6 +10,6 @@ import es.rodaja.model.entity.FlowerPot;
 @Repository
 public interface DaoFlowerPot extends JpaRepository<FlowerPot, String>{
 
-	public void deleteByMacAddress(String macAddress);
-	public Optional<FlowerPot> findByMacAddress(String macAddress);
+	public void deleteByMacAddressIgnoreCase(String macAddress);
+	public Optional<FlowerPot> findByMacAddressIgnoreCase(String macAddress);
 }
