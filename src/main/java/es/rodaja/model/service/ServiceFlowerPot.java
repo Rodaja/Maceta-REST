@@ -61,7 +61,7 @@ public class ServiceFlowerPot {
 	 * @return The flowerpot with the mac address, null in case there is no flowerpot founded
 	 */
 	public Optional<FlowerPot> findByMacAddress(String macAddress){
-		return dfp.findByMacAddress(macAddress);
+		return dfp.findByMacAddressIgnoreCase(macAddress);
 	}
 
 	
@@ -71,6 +71,6 @@ public class ServiceFlowerPot {
 	 * @param id The mac address of the flowerpot to be removed
 	 */
 	public void delete(String macAddress) {
-		dfp.deleteByMacAddress(macAddress);
+		dfp.deleteByMacAddressIgnoreCase(macAddress);
 	}
 }
