@@ -44,4 +44,13 @@ public class ServiceFlowerPot {
 		return response;
 	}
 
+	
+	/**
+	 * This method deletes a flowerpot by its mac address
+	 * 
+	 * @param id The mac address of the flowerpot to be removed
+	 */
+	public void delete(String macAddress) {
+		dfp.deleteByMacAddress(macAddress);
+	}
 }
