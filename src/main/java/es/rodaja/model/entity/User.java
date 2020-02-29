@@ -1,9 +1,13 @@
 package es.rodaja.model.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,19 +23,23 @@ public class User {
 	private String secondSurname;
 	private String password;
 	private String country;
+	
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<FlowerPot> listFlowerPots;
 
 	public User() {
 	}
 
-	public User(String email, String name, String firstSurname, String secondSurname, String password, String country) {
+	public User(String email, String name, String firstSurname, String secondSurname, String password, String country,
+			List<FlowerPot> listFlowerPots) {
 		super();
-
 		this.email = email;
 		this.name = name;
 		this.firstSurname = firstSurname;
 		this.secondSurname = secondSurname;
 		this.password = password;
 		this.country = country;
+		this.listFlowerPots = listFlowerPots;
 	}
 
 	public int getId() {
@@ -90,10 +98,19 @@ public class User {
 		this.country = country;
 	}
 
+	public List<FlowerPot> getListFlowerPots() {
+		return listFlowerPots;
+	}
+
+	public void setListFlowerPots(List<FlowerPot> listFlowerPots) {
+		this.listFlowerPots = listFlowerPots;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", firstSurname=" + firstSurname
-				+ ", secondSurname=" + secondSurname + ", password=" + password + ", country=" + country + "]";
+				+ ", secondSurname=" + secondSurname + ", password=" + password + ", country=" + country
+				+ ", listFlowerPots=" + listFlowerPots + "]";
 	}
 	
 	
