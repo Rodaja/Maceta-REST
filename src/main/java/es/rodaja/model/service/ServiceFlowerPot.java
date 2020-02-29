@@ -1,6 +1,7 @@
 package es.rodaja.model.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,15 @@ public class ServiceFlowerPot {
 	 */
 	public List<FlowerPot> findAll(){
 		return dfp.findAll();
+	}
+	
+	/**
+	 * This method finds the flowerpot with the mac address given as a parameter
+	 * @param macAddress The mac address of the flowerpot
+	 * @return The flowerpot with the mac address, null in case there is no flowerpot founded
+	 */
+	public Optional<FlowerPot> findByMacAddress(String macAddress){
+		return dfp.findByMacAddress(macAddress);
 	}
 
 	
