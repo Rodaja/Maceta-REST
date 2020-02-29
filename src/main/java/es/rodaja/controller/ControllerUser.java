@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,9 +50,22 @@ public class ControllerUser {
 		}
 
 	}
+	
+	@PutMapping(path = "api/users/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> modify(@PathVariable("id") Integer id, @RequestBody User userModified) {
+		Optional<User> user = su.findById(id);
+
+		if (user.isPresent()) {
+			userModified.setId(id);
+			su.modify(userModified);
+			return new ResponseEntity<User>(userModified, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@DeleteMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id) {
+	public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent()) {
@@ -62,7 +76,7 @@ public class ControllerUser {
 	}
 	
 	@DeleteMapping(path = "api/users/{id}/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id, @PathVariable("macAddress") String macAddress) {
+	public ResponseEntity<String> deleteUserFlowerpot(@PathVariable("id") Integer id, @PathVariable("macAddress") String macAddress) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent() && !macAddress.isEmpty()) {
