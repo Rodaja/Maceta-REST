@@ -60,5 +60,17 @@ public class ControllerUser {
 			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@DeleteMapping(path = "api/users/{id}/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id, @PathVariable("macAddress") String macAddress) {
+		Optional<User> user = su.findById(id);
+
+		if (user.isPresent()) {
+			
+			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);
+		}
+	}
 
 }
