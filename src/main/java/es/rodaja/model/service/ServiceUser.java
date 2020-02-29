@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.User;
 import es.rodaja.model.persistence.DaoUser;
 
@@ -100,5 +101,36 @@ public class ServiceUser {
 	 */
 	public void delete(Integer id) {
 		du.deleteById(id);
+	}
+	
+	/**
+	 * This method adds a flowerpot to a given user
+	 * @param u The user 
+	 * @param f The flowerpot to add
+	 */
+	public void addFlowerPot(User u, FlowerPot f) {
+		List<FlowerPot> listFlowerPots = u.getListFlowerPots();
+		listFlowerPots.add(f);
+		u.setListFlowerPots(listFlowerPots);
+		du.save(u);
+	}
+	
+	/**
+	 * This method removes a flowerpot of a user
+	 * @param u The user 
+	 * @param f The flowerpot to remove
+	 */
+	public void removeFlowerPot(User u, FlowerPot f) {
+		List<FlowerPot> listFlowerPots = u.getListFlowerPots();
+		
+		for (FlowerPot flowerPot : listFlowerPots) {
+			if (flowerPot.getMacAddress().equalsIgnoreCase(f.getMacAddress())) {
+				listFlowerPots.remove(flowerPot);
+				break;
+			}
+		}
+		
+		u.setListFlowerPots(listFlowerPots);
+		du.save(u);
 	}
 }
