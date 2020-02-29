@@ -1,5 +1,8 @@
 package es.rodaja.model.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +46,29 @@ public class ServiceUser {
 		return response;
 	}
 
+	/**
+	 * This method returns all the users persisted
+	 * @return A list with all the users
+	 */
+	public List<User> findAll(){
+		return du.findAll();
+	}
+	
+	/**
+	 * This method finds a user by its ID
+	 * @param id The user ID
+	 * @return The user with that ID, null if there is no user with that ID
+	 */
+	public Optional<User> findById(Integer id) {
+		return du.findById(id);
+	}
+	
+	/**
+	 * This method finds a user by its email
+	 * @param email The email of the user
+	 * @return The user with that email, null if there is no user with that email
+	 */
+	public Optional<User> findByEmail(String email) {
+		return du.findByEmail(email);
+	}
 }
