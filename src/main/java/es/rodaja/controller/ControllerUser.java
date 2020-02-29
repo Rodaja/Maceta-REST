@@ -65,7 +65,7 @@ public class ControllerUser {
 	public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id, @PathVariable("macAddress") String macAddress) {
 		Optional<User> user = su.findById(id);
 
-		if (user.isPresent()) {
+		if (user.isPresent() && !macAddress.isEmpty()) {
 			su.removeFlowerPot(user.get(), macAddress);
 			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 		} else {
