@@ -1,5 +1,7 @@
 package es.rodaja.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,14 @@ public class ServiceFlowerPot {
 		}
 		
 		return response;
+	}
+	
+	/**
+	 * This method finds all the flowerpots that are persisted 
+	 * @return A list with all the flowerpots
+	 */
+	public List<FlowerPot> findAll(){
+		return dfp.findAll();
 	}
 
 	
