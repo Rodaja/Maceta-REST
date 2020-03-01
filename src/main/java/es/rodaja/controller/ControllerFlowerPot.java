@@ -52,7 +52,7 @@ public class ControllerFlowerPot {
 
 	}
 	
-	@DeleteMapping(path = "api/usuarios/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "api/flowerpots/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrarMacetaUsuario(@PathVariable("macAddress") String macAddress) {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
