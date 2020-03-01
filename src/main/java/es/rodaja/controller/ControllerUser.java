@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.User;
 import es.rodaja.model.service.ServiceUser;
 
@@ -64,7 +65,17 @@ public class ControllerUser {
 		}
 	}
 
-	// TODO Put or post method that allows to add a flowerpot to a given user
+	@PutMapping(path = "api/users/{id}/flowerpot", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> modifyUserFlowerpots(@PathVariable("id") Integer id, @RequestBody FlowerPot fp) {
+		Optional<User> user = su.findById(id);
+
+		if (user.isPresent()) {
+			su.addFlowerPot(user.get(), fp);
+			return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@DeleteMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
@@ -77,7 +88,7 @@ public class ControllerUser {
 		}
 	}
 
-	@DeleteMapping(path = "api/users/{id}/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "api/users/{id}/flowerpot/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteUserFlowerpot(@PathVariable("id") Integer id,
 			@PathVariable("macAddress") String macAddress) {
 		Optional<User> user = su.findById(id);
