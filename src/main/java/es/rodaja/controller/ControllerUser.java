@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.rodaja.model.entity.FlowerPot;
@@ -35,9 +36,16 @@ public class ControllerUser {
 	}
 
 	@GetMapping(path = "api/users", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> findAll() {
-		List<User> users = su.findAll();
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	public ResponseEntity<List<User>> findAll(@RequestParam(name = "email", required = false) String email) {
+		if (email != null ) {
+			List<User> users = su.findAllByEmail();
+			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+		} else {
+			List<User> users = su.findAll();
+			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+		}
+		
+		
 	}
 
 	@GetMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
