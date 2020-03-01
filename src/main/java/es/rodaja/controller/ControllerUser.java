@@ -38,7 +38,7 @@ public class ControllerUser {
 	@GetMapping(path = "api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<User>> findAll(@RequestParam(name = "email", required = false) String email) {
 		if (email != null ) {
-			List<User> users = su.findAllByEmail();
+			List<User> users = su.findByEmail(email);
 			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 		} else {
 			List<User> users = su.findAll();

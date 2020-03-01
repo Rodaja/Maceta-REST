@@ -70,10 +70,10 @@ public class ServiceUser {
 	 * This method finds a user by its email
 	 * 
 	 * @param email The email of the user
-	 * @return The user with that email, null if there is no user with that email
+	 * @return The list of users with that email, empty list if there is no user with that email
 	 */
-	public Optional<User> findByEmail(String email) {
-		return du.findByEmail(email);
+	public List<User> findByEmail(String email) {
+		return du.findAllByEmail(email);
 	}
 
 	/**
