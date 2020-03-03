@@ -30,7 +30,7 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
-			hashPassword(u.getPassword());
+			u.setPassword(hashPassword(u.getPassword()));
 			du.save(u);
 			response = true;
 		}
