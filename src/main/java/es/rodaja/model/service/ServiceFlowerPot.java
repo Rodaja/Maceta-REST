@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.persistence.DaoFlowerPot;
@@ -90,9 +91,11 @@ public class ServiceFlowerPot {
 
 	/**
 	 * This method deletes a flowerpot by its mac address
+	 * We use transational to allow to remove the flowerpot
 	 * 
 	 * @param id The mac address of the flowerpot to be removed
 	 */
+	@Transactional
 	public void delete(String macAddress) {
 		dfp.deleteByMacAddressIgnoreCase(macAddress);
 	}
