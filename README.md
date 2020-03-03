@@ -31,7 +31,7 @@ User structure with example adding flowerpots to it:
    "airHumidity":50,
    "airTemperature":32
   },{
-   "macAddress": "11:11:11:11:11:11",
+   "macAddress": "22:22:22:22:22:22",
    "groundHumidity": 70,
    "brightness":30,
    "airHumidity":70,
