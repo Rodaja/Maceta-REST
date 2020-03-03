@@ -1,10 +1,13 @@
 package es.rodaja.model.service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.common.hash.Hashing;
 
 import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.User;
@@ -27,6 +30,7 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
+			hashPassword(u.getPassword());
 			du.save(u);
 			response = true;
 		}
@@ -45,6 +49,15 @@ public class ServiceUser {
 		String passwd = u.getPassword();
 		boolean response = !email.isEmpty() && !passwd.isEmpty() ? true : false;
 		return response;
+	}
+	
+	/**
+	 * This method hash the user password using SHA256
+	 * @param password The password to hash
+	 * @return The hashed password
+	 */
+	private String hashPassword(String password) {
+		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 	}
 
 	/**
