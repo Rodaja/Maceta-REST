@@ -66,8 +66,12 @@ public class ControllerUser {
 
 		if (user.isPresent()) {
 			userModified.setId(id);
-			su.modify(userModified);
-			return new ResponseEntity<User>(userModified, HttpStatus.OK);
+			if (su.modify(userModified)) {
+				return new ResponseEntity<User>(userModified, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			}
+			
 		} else {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
