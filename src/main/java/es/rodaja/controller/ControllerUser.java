@@ -76,13 +76,16 @@ public class ControllerUser {
 	@PutMapping(path = "api/users/{id}/flowerpot", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> modifyUserFlowerpots(@PathVariable("id") Integer id, @RequestBody FlowerPot fp) {
 		Optional<User> user = su.findById(id);
-
-		if (user.isPresent()) {
+		
+		try {
 			su.addFlowerPot(user.get(), fp);
 			return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-		} else {
+		} catch (Exception e) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+
 		}
+			
+			
 	}
 
 	@DeleteMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,6 +93,7 @@ public class ControllerUser {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent()) {
+			su.delete(id);
 			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);

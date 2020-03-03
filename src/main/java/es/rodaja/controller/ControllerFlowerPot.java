@@ -25,7 +25,7 @@ public class ControllerFlowerPot {
 	private ServiceFlowerPot sf;
 	
 	@PostMapping(path = "api/flowerpots", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FlowerPot> guardar(@RequestBody FlowerPot fp) {
+	public ResponseEntity<FlowerPot> save(@RequestBody FlowerPot fp) {
 		if (sf.save(fp)) {
 			return new ResponseEntity<FlowerPot>(fp, HttpStatus.CREATED);
 		} else {
@@ -34,13 +34,13 @@ public class ControllerFlowerPot {
 	}
 
 	@GetMapping(path = "api/flowerpots", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<FlowerPot>> listar() {
+	public ResponseEntity<List<FlowerPot>> findAll() {
 		List<FlowerPot> flowerpots = sf.findAll();
 		return new ResponseEntity<List<FlowerPot>>(flowerpots, HttpStatus.OK);
 	}
 
 	@PutMapping(path = "api/flowerpots/{macAddress}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FlowerPot> addMacetaUsuario(@PathVariable("macAddress") String macAddress, @RequestBody FlowerPot flowerpotModified) {
+	public ResponseEntity<FlowerPot> modify(@PathVariable("macAddress") String macAddress, @RequestBody FlowerPot flowerpotModified) {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
 		if (flowerpot.isPresent()) {
@@ -53,7 +53,7 @@ public class ControllerFlowerPot {
 	}
 	
 	@DeleteMapping(path = "api/flowerpots/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> borrarMacetaUsuario(@PathVariable("macAddress") String macAddress) {
+	public ResponseEntity<String> delete(@PathVariable("macAddress") String macAddress) {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
 		if (flowerpot.isPresent()) {
