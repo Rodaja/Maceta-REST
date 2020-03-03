@@ -30,7 +30,6 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
-			u.setPassword(hashPassword(u.getPassword()));
 			du.save(u);
 			response = true;
 		}
@@ -48,6 +47,10 @@ public class ServiceUser {
 		String email = u.getEmail();
 		String passwd = u.getPassword();
 		boolean response = !email.isEmpty() && !passwd.isEmpty() ? true : false;
+		
+		//Hash the user password
+		u.setPassword(hashPassword(u.getPassword()));
+		
 		return response;
 	}
 	
