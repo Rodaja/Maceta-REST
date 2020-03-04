@@ -1,7 +1,9 @@
 # Maceta-REST
 Image
 ## Description
+All the information is given in JSON format and the server has to receive all the data in JSON fromat too.
 
+## Security
 ## JSON Structure
 Flowerpot structure with example:
 ```
@@ -57,17 +59,14 @@ This method is used to register a new user in to the database, it has to receive
   "flowerpots":Array flowerpots          Optional
  }
  ```
-  
-  * email --> Obligatory
-  * name --> Optional
-  * firstSurname --> Optional
-  * secondSurname --> Optional
-  * password --> Obligatory
-  * country --> Optional
+ It returns a JSON that has all the information provided.
 ### GET methods
 **Get all the users saved in the database**.  
 http://url/api/users  
-This method is used to get all the users of the database, it doesn´t have to receive anything from the body.
+This method is used to get all the users of the database, it doesn´t have to receive anything from the body and it returns a list with all the users found.
+```
+Example
+```
 
 ### PUT methods
 **Modify a user by its ID**.  
