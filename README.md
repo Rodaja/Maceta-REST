@@ -96,4 +96,4 @@ http://url/api/flowerpots/macAddress
 http://url/api/flowerpots/macAddress  
 This method is used to delete a flowerpot by its MAC address.
 
-<a name="license">## License</a>
+## License <a name="license"></a>
