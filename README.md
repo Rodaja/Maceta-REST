@@ -3,7 +3,7 @@ Image
 
 ## Table of contents
 * [installation](##Installation)
-* [license](##License)
+* [license](#license)
 
 ## Installation
 ## Description
@@ -96,4 +96,4 @@ http://url/api/flowerpots/macAddress
 http://url/api/flowerpots/macAddress  
 This method is used to delete a flowerpot by its MAC address.
 
-## License
+<a name="license">## License</a>
