@@ -17,8 +17,9 @@ All the information is given in JSON format and the server has to receive all th
 ## Security <a name="security"></a>
 ## JSON Structure <a name="json"></a>
 Flowerpot structure with example:  
-<img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_Flowerpot.png" height="400"/>
-User structure with example adding flowerpots to it:
+<p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_Flowerpot.png" height="400"/></p>
+User structure with example adding flowerpots to it:  
+<p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_User.png" height="500"/></p>  
 
 ```
  {
