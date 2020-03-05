@@ -16,7 +16,8 @@ All the information is given in JSON format and the server has to receive all th
 
 ## Security <a name="security"></a>
 ## JSON Structure <a name="json"></a>
-Flowerpot structure with example:
+Flowerpot structure with example:  
+<img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_Flowerpot.png" height="400"/>
 ```
 {
  "macAddress": "11:11:11:11:11:11",
