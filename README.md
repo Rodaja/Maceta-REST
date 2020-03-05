@@ -1,12 +1,15 @@
 Image
 # Maceta-REST
-## Description
-All the information is given in JSON format and the server has to receive all the data in JSON fromat too.
+
 ## Table of contents
+* [Description](#description)
 * [Installation](#installation)
 * [Security](#installation)
 * [JSON structure](#json)
 * [License](#license)
+
+## Description <a name="description"></a>
+All the information is given in JSON format and the server has to receive all the data in JSON fromat too.
 
 ## Installation <a name="installation"></a>
 
