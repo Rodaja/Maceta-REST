@@ -1,5 +1,10 @@
-# Maceta-REST
 Image
+# Maceta-REST
+
+## Table of contents
+* [installation](##Installation)
+
+## Installation
 ## Description
 All the information is given in JSON format and the server has to receive all the data in JSON fromat too.
 
