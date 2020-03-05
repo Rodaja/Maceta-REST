@@ -21,32 +21,6 @@ Flowerpot structure with example:
 User structure with example adding flowerpots to it:  
 <p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_User.png" height="500"/></p>  
 
-```
- {
-  "email": "Johndoe@mail.com",
-  "name": "John",
-  "firstSurname":"Doe",
-  "secondSurname":"Murphy",
-  "password": "1234",
-  "country":"Spain",
-  "flowerpots":[
-  {
-   "macAddress": "11:11:11:11:11:11",
-   "groundHumidity": 25,
-   "brightness":60,
-   "airHumidity":50,
-   "airTemperature":32
-  },{
-   "macAddress": "22:22:22:22:22:22",
-   "groundHumidity": 70,
-   "brightness":30,
-   "airHumidity":70,
-   "airTemperature":20
-   }
-  ]
- }
-```
-
 ## User Routes
 ### POST methods
 **Save a user in the database**.  
