@@ -1,16 +1,18 @@
 Image
 # Maceta-REST
-
-## Table of contents
-* [installation](##Installation)
-* [license](#license)
-
-## Installation
 ## Description
 All the information is given in JSON format and the server has to receive all the data in JSON fromat too.
+## Table of contents
+* [Installation](#installation)
+* [Security](#installation)
+* [JSON structure](#json)
+* [License](#license)
 
-## Security
-## JSON Structure
+## Installation <a name="installation"></a>
+
+
+## Security <a name="security"></a>
+## JSON Structure <a name="json"></a>
 Flowerpot structure with example:
 ```
 {
