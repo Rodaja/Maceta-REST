@@ -25,8 +25,8 @@ User structure with example adding flowerpots to it:
 ### POST methods
 **Save a user in the database**.  
 http://url/api/users  
-This method is used to register a new user in to the database, it has to receive a JSON with the following information:
-
+This method is used to register a new user in to the database, it has to receive a JSON with the following information:  
+<p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_User_Type.png" height="400"/></p> 
 It returns a JSON that has all the information provided.
 ### GET methods
 **Get all the users saved in the database**.  
