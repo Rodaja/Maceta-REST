@@ -26,18 +26,8 @@ User structure with example adding flowerpots to it:
 **Save a user in the database**.  
 http://url/api/users  
 This method is used to register a new user in to the database, it has to receive a JSON with the following information:
- ```
- {
-  "email": String                        Obligatory
-  "name": String                         Optional
-  "firstSurname":String                  Optional
-  "secondSurname":String                 Optional
-  "password": String                     Obligatory
-  "country":String                       Optional
-  "flowerpots":Array flowerpots          Optional
- }
- ```
- It returns a JSON that has all the information provided.
+
+It returns a JSON that has all the information provided.
 ### GET methods
 **Get all the users saved in the database**.  
 http://url/api/users  
