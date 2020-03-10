@@ -29,10 +29,11 @@ public class ContollerLogin {
 		if (user.isPresent()) {
 			Optional<User> userChecked = su.checkCredentials(user.get(), login);
 			
-			if (user.isPresent()) {
+			//TODO Fix the null pointer exception
+			if (userChecked.isPresent()) {
 				return new ResponseEntity<User>(userChecked.get(),HttpStatus.OK);
 			} else {
-				return new ResponseEntity<User>(userChecked.get(),HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 			}
 		} else {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);

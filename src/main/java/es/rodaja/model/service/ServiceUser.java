@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.Email;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -160,11 +162,11 @@ public class ServiceUser {
 	}
 
 	public Optional<User> checkCredentials(User user, Login login) {
-		Optional<User> response = null;
-
 		String email = user.getEmail();
 
-		if (findByEmail(email).size() > 0) {
+		Optional<User> response = findByEmail(email);
+
+		if (response.isPresent()) {
 
 			String userPassword = user.getPassword();
 
@@ -172,8 +174,8 @@ public class ServiceUser {
 
 			String loginPassword = login.getPassword();
 
-			if (userPassword.equals(loginPassword)) {
-				response = Optional.of(findByEmail(email).get(0));
+			if (!userPassword.equals(loginPassword)) {
+				response = null;
 			}
 		}
 		return response;
