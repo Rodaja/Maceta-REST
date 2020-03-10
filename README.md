@@ -16,61 +16,18 @@ All the information is given in JSON format and the server has to receive all th
 
 ## Security <a name="security"></a>
 ## JSON Structure <a name="json"></a>
-Flowerpot structure with example:
-```
-{
- "macAddress": "11:11:11:11:11:11",
- "groundHumidity": 25,
- "brightness":60,
- "airHumidity":50,
- "airTemperature":32
-}
-```
-User structure with example adding flowerpots to it:
-
-```
- {
-  "email": "Johndoe@mail.com",
-  "name": "John",
-  "firstSurname":"Doe",
-  "secondSurname":"Murphy",
-  "password": "1234",
-  "country":"Spain",
-  "flowerpots":[
-  {
-   "macAddress": "11:11:11:11:11:11",
-   "groundHumidity": 25,
-   "brightness":60,
-   "airHumidity":50,
-   "airTemperature":32
-  },{
-   "macAddress": "22:22:22:22:22:22",
-   "groundHumidity": 70,
-   "brightness":30,
-   "airHumidity":70,
-   "airTemperature":20
-   }
-  ]
- }
-```
+Flowerpot structure with example:  
+<p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_Flowerpot.png" height="400"/></p>
+User structure with example adding flowerpots to it:  
+<p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_User.png" height="500"/></p>  
 
 ## User Routes
 ### POST methods
 **Save a user in the database**.  
 http://url/api/users  
-This method is used to register a new user in to the database, it has to receive a JSON with the following information:
- ```
- {
-  "email": String                        Obligatory
-  "name": String                         Optional
-  "firstSurname":String                  Optional
-  "secondSurname":String                 Optional
-  "password": String                     Obligatory
-  "country":String                       Optional
-  "flowerpots":Array flowerpots          Optional
- }
- ```
- It returns a JSON that has all the information provided.
+This method is used to register a new user in to the database, it has to receive a JSON with the following information:  
+<p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_User_Type.png" height="400"/></p> 
+It returns a JSON that has all the information provided.
 ### GET methods
 **Get all the users saved in the database**.  
 http://url/api/users  
