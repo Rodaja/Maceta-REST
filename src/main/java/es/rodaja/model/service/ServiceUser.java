@@ -95,8 +95,8 @@ public class ServiceUser {
 	 * @return The list of users with that email, empty list if there is no user
 	 *         with that email
 	 */
-	public List<User> findByEmail(String email) {
-		return du.findAllByEmail(email);
+	public Optional<User> findByEmail(String email) {
+		return du.findByEmail(email);
 	}
 
 	/**
