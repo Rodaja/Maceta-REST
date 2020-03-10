@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.hash.Hashing;
 
 import es.rodaja.model.entity.FlowerPot;
+import es.rodaja.model.entity.Login;
 import es.rodaja.model.entity.User;
 import es.rodaja.model.persistence.DaoUser;
 
@@ -148,5 +149,10 @@ public class ServiceUser {
 		
 		u.setListFlowerPots(listFlowerPots);
 		du.save(u);
+	}
+	
+	public Optional<User> checkCredentials(User user, Login login) {
+		return null;
+		
 	}
 }
