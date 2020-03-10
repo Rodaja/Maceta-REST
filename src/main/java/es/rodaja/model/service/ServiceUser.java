@@ -20,7 +20,7 @@ public class ServiceUser {
 
 	@Autowired
 	private DaoUser du;
-	
+
 	final UserSecurity us = new UserSecurity();
 
 	/**
@@ -161,15 +161,16 @@ public class ServiceUser {
 
 	public Optional<User> checkCredentials(User user, Login login) {
 		Optional<User> response = null;
-		
+
 		String email = user.getEmail();
 
 		if (findByEmail(email).size() > 0) {
 
 			String userPassword = user.getPassword();
-			String loginPassword = login.getPassword();
 
 			login.setPassword(hashPassword(login.getPassword()));
+
+			String loginPassword = login.getPassword();
 
 			if (userPassword.equals(loginPassword)) {
 				response = Optional.of(findByEmail(email).get(0));
