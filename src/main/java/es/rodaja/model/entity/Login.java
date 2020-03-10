@@ -1,8 +1,5 @@
 package es.rodaja.model.entity;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Login {
 	
 	private String email;

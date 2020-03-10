@@ -21,7 +21,7 @@ public class ContollerLogin {
 	@Autowired
 	private ServiceUser su;
 
-	@GetMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "api/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> login(@RequestBody Login login){
 		
 		List<User> users = su.findByEmail(login.getEmail());

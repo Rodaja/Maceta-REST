@@ -13,12 +13,15 @@ import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.Login;
 import es.rodaja.model.entity.User;
 import es.rodaja.model.persistence.DaoUser;
+import es.rodaja.model.security.UserSecurity;
 
 @Service
 public class ServiceUser {
 
 	@Autowired
 	private DaoUser du;
+	
+	final UserSecurity us = new UserSecurity();
 
 	/**
 	 * This method persist a user given by the parameter <b>if it hasn´t the email
@@ -31,6 +34,7 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
+			u.setApiKey(us.generateApiKey());
 			du.save(u);
 			response = true;
 		}
