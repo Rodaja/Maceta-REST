@@ -4,20 +4,26 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.Email;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
 
 import es.rodaja.model.entity.FlowerPot;
+import es.rodaja.model.entity.Login;
 import es.rodaja.model.entity.User;
 import es.rodaja.model.persistence.DaoUser;
+import es.rodaja.model.security.UserSecurity;
 
 @Service
 public class ServiceUser {
 
 	@Autowired
 	private DaoUser du;
+
+	final UserSecurity us = new UserSecurity();
 
 	/**
 	 * This method persist a user given by the parameter <b>if it hasn´t the email
@@ -30,6 +36,7 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
+			u.setApiKey(us.generateApiKey());
 			du.save(u);
 			response = true;
 		}
@@ -47,15 +54,16 @@ public class ServiceUser {
 		String email = u.getEmail();
 		String passwd = u.getPassword();
 		boolean response = !email.isEmpty() && !passwd.isEmpty() ? true : false;
-		
-		//Hash the user password
+
+		// Hash the user password
 		u.setPassword(hashPassword(u.getPassword()));
-		
+
 		return response;
 	}
-	
+
 	/**
 	 * This method hash the user password using SHA256
+	 * 
 	 * @param password The password to hash
 	 * @return The hashed password
 	 */
@@ -86,7 +94,8 @@ public class ServiceUser {
 	 * This method finds a user by its email
 	 * 
 	 * @param email The email of the user
-	 * @return The list of users with that email, empty list if there is no user with that email
+	 * @return The list of users with that email, empty list if there is no user
+	 *         with that email
 	 */
 	public Optional<User> findByEmail(String email) {
 		return du.findByEmail(email);
@@ -118,10 +127,11 @@ public class ServiceUser {
 	public void delete(Integer id) {
 		du.deleteById(id);
 	}
-	
+
 	/**
 	 * This method adds a flowerpot to a given user
-	 * @param u The user 
+	 * 
+	 * @param u The user
 	 * @param f The flowerpot to add
 	 */
 	public void addFlowerPot(User u, FlowerPot f) {
@@ -130,23 +140,44 @@ public class ServiceUser {
 		u.setListFlowerPots(listFlowerPots);
 		du.save(u);
 	}
-	
+
 	/**
 	 * This method removes a flowerpot of a user
-	 * @param u The user 
+	 * 
+	 * @param u The user
 	 * @param f The flowerpot MAC address to remove
 	 */
 	public void removeFlowerPot(User u, String macAddress) {
 		List<FlowerPot> listFlowerPots = u.getListFlowerPots();
-		
+
 		for (FlowerPot flowerPot : listFlowerPots) {
 			if (flowerPot.getMacAddress().equalsIgnoreCase(macAddress)) {
 				listFlowerPots.remove(flowerPot);
 				break;
 			}
 		}
-		
+
 		u.setListFlowerPots(listFlowerPots);
 		du.save(u);
+	}
+
+	public Optional<User> checkCredentials(User user, Login login) {
+		String email = user.getEmail();
+
+		Optional<User> response = findByEmail(email);
+
+		if (response.isPresent()) {
+
+			String userPassword = user.getPassword();
+
+			login.setPassword(hashPassword(login.getPassword()));
+
+			String loginPassword = login.getPassword();
+
+			if (!userPassword.equals(loginPassword)) {
+				response = null;
+			}
+		}
+		return response;
 	}
 }
