@@ -48,15 +48,16 @@ public class ServiceUser {
 		String email = u.getEmail();
 		String passwd = u.getPassword();
 		boolean response = !email.isEmpty() && !passwd.isEmpty() ? true : false;
-		
-		//Hash the user password
+
+		// Hash the user password
 		u.setPassword(hashPassword(u.getPassword()));
-		
+
 		return response;
 	}
-	
+
 	/**
 	 * This method hash the user password using SHA256
+	 * 
 	 * @param password The password to hash
 	 * @return The hashed password
 	 */
@@ -87,7 +88,8 @@ public class ServiceUser {
 	 * This method finds a user by its email
 	 * 
 	 * @param email The email of the user
-	 * @return The list of users with that email, empty list if there is no user with that email
+	 * @return The list of users with that email, empty list if there is no user
+	 *         with that email
 	 */
 	public List<User> findByEmail(String email) {
 		return du.findAllByEmail(email);
@@ -119,10 +121,11 @@ public class ServiceUser {
 	public void delete(Integer id) {
 		du.deleteById(id);
 	}
-	
+
 	/**
 	 * This method adds a flowerpot to a given user
-	 * @param u The user 
+	 * 
+	 * @param u The user
 	 * @param f The flowerpot to add
 	 */
 	public void addFlowerPot(User u, FlowerPot f) {
@@ -131,28 +134,43 @@ public class ServiceUser {
 		u.setListFlowerPots(listFlowerPots);
 		du.save(u);
 	}
-	
+
 	/**
 	 * This method removes a flowerpot of a user
-	 * @param u The user 
+	 * 
+	 * @param u The user
 	 * @param f The flowerpot MAC address to remove
 	 */
 	public void removeFlowerPot(User u, String macAddress) {
 		List<FlowerPot> listFlowerPots = u.getListFlowerPots();
-		
+
 		for (FlowerPot flowerPot : listFlowerPots) {
 			if (flowerPot.getMacAddress().equalsIgnoreCase(macAddress)) {
 				listFlowerPots.remove(flowerPot);
 				break;
 			}
 		}
-		
+
 		u.setListFlowerPots(listFlowerPots);
 		du.save(u);
 	}
-	
+
 	public Optional<User> checkCredentials(User user, Login login) {
-		return null;
+		Optional<User> response = null;
 		
+		String email = user.getEmail();
+
+		if (findByEmail(email).size() > 0) {
+
+			String userPassword = user.getPassword();
+			String loginPassword = login.getPassword();
+
+			login.setPassword(hashPassword(login.getPassword()));
+
+			if (userPassword.equals(loginPassword)) {
+				response = Optional.of(findByEmail(email).get(0));
+			}
+		}
+		return response;
 	}
 }

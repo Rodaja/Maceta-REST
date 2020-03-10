@@ -27,7 +27,7 @@ public class ContollerLogin {
 		List<User> users = su.findByEmail(login.getEmail());
 		
 		if (users.size() > 0) {
-			Optional<User> user = su.checkCredentials(user, login);
+			Optional<User> user = su.checkCredentials(users.get(0), login);
 			
 			if (user.isPresent()) {
 				return new ResponseEntity<User>(user.get(),HttpStatus.OK);
