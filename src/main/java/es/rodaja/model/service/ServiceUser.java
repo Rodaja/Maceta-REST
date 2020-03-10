@@ -1,10 +1,13 @@
 package es.rodaja.model.service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.common.hash.Hashing;
 
 import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.User;
@@ -44,7 +47,20 @@ public class ServiceUser {
 		String email = u.getEmail();
 		String passwd = u.getPassword();
 		boolean response = !email.isEmpty() && !passwd.isEmpty() ? true : false;
+		
+		//Hash the user password
+		u.setPassword(hashPassword(u.getPassword()));
+		
 		return response;
+	}
+	
+	/**
+	 * This method hash the user password using SHA256
+	 * @param password The password to hash
+	 * @return The hashed password
+	 */
+	private String hashPassword(String password) {
+		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 	}
 
 	/**
@@ -72,8 +88,8 @@ public class ServiceUser {
 	 * @param email The email of the user
 	 * @return The list of users with that email, empty list if there is no user with that email
 	 */
-	public List<User> findByEmail(String email) {
-		return du.findAllByEmail(email);
+	public Optional<User> findByEmail(String email) {
+		return du.findByEmail(email);
 	}
 
 	/**
