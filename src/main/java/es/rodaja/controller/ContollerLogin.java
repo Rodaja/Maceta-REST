@@ -24,15 +24,15 @@ public class ContollerLogin {
 	@GetMapping(path = "api/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> login(@RequestBody Login login){
 		
-		List<User> users = su.findByEmail(login.getEmail());
+		Optional<User> user = su.findByEmail(login.getEmail());
 		
-		if (users.size() > 0) {
-			Optional<User> user = su.checkCredentials(users.get(0), login);
+		if (user.isPresent()) {
+			Optional<User> userChecked = su.checkCredentials(user.get(), login);
 			
 			if (user.isPresent()) {
-				return new ResponseEntity<User>(user.get(),HttpStatus.OK);
+				return new ResponseEntity<User>(userChecked.get(),HttpStatus.OK);
 			} else {
-				return new ResponseEntity<User>(user.get(),HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<User>(userChecked.get(),HttpStatus.BAD_REQUEST);
 			}
 		} else {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
