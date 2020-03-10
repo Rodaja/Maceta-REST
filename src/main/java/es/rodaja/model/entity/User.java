@@ -23,7 +23,8 @@ public class User {
 	private String secondSurname;
 	private String password;
 	private String country;
-	
+	private String apiKey;
+
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<FlowerPot> listFlowerPots;
 
@@ -31,7 +32,7 @@ public class User {
 	}
 
 	public User(String email, String name, String firstSurname, String secondSurname, String password, String country,
-			List<FlowerPot> listFlowerPots) {
+			String apiKey, List<FlowerPot> listFlowerPots) {
 		super();
 		this.email = email;
 		this.name = name;
@@ -39,6 +40,7 @@ public class User {
 		this.secondSurname = secondSurname;
 		this.password = password;
 		this.country = country;
+		this.apiKey = apiKey;
 		this.listFlowerPots = listFlowerPots;
 	}
 
@@ -106,13 +108,21 @@ public class User {
 		this.listFlowerPots = listFlowerPots;
 	}
 
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", firstSurname=" + firstSurname
-				+ ", secondSurname=" + secondSurname + ", password=" + password + ", country=" + country
-				+ ", listFlowerPots=" + listFlowerPots + "]";
+				+ ", secondSurname=" + secondSurname + ", password=" + password + ", country=" + country + ", apiKey="
+				+ apiKey + ", listFlowerPots=" + listFlowerPots + "]";
 	}
-	
-	
+
+
 
 }
