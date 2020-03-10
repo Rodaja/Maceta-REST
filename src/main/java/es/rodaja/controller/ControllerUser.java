@@ -1,5 +1,6 @@
 package es.rodaja.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +39,14 @@ public class ControllerUser {
 	@GetMapping(path = "api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<User>> findAll(@RequestParam(name = "email", required = false) String email) {
 		if (email != null ) {
-			List<User> users = su.findByEmail(email);
-			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+			Optional<User> user = su.findByEmail(email);
+			if (user.isPresent()) {
+				List<User> users = new ArrayList<User>();
+				users.add(user.get());
+				return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+			}
 		} else {
 			List<User> users = su.findAll();
 			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
