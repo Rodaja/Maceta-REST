@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,30 +38,37 @@ public class ControllerUser {
 	}
 
 	@GetMapping(path = "api/users", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> findAll(@RequestParam(name = "email", required = false) String email) {
-		if (email != null ) {
+	public ResponseEntity<User> findAll(@RequestParam(name = "email", required = false) String email,
+			@RequestHeader("Api-Key") String key) {
+		if (email != null) {
 			Optional<User> user = su.findByEmail(email);
 			if (user.isPresent()) {
-				List<User> users = new ArrayList<User>();
-				users.add(user.get());
-				return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+				if (su.checkApiKey(user.get(), key)) {
+					return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+				} else {
+					return new ResponseEntity<User>(HttpStatus.FORBIDDEN);
+				}
+
 			} else {
-				return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 			}
 		} else {
-			List<User> users = su.findAll();
-			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
 	}
 
 	@GetMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> findById(@PathVariable("id") Integer id) {
+	public ResponseEntity<User> findById(@PathVariable("id") Integer id, @RequestHeader("Api-Key") String key) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent()) {
-			return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+			if (su.checkApiKey(user.get(), key)) {
+				return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<User>(HttpStatus.FORBIDDEN);
+			}
+
 		} else {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
@@ -68,17 +76,22 @@ public class ControllerUser {
 	}
 
 	@PutMapping(path = "api/users/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> modify(@PathVariable("id") Integer id, @RequestBody User userModified) {
+	public ResponseEntity<User> modify(@PathVariable("id") Integer id, @RequestBody User userModified,
+			@RequestHeader("Api-Key") String key) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent()) {
-			userModified.setId(id);
-			if (su.modify(userModified)) {
-				return new ResponseEntity<User>(userModified, HttpStatus.OK);
-			}else {
-				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			if (su.checkApiKey(user.get(), key)) {
+				userModified.setId(id);
+				if (su.modify(userModified)) {
+					return new ResponseEntity<User>(userModified, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+				}
+			} else {
+				return new ResponseEntity<User>(HttpStatus.FORBIDDEN);
 			}
-			
+
 		} else {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
@@ -87,7 +100,7 @@ public class ControllerUser {
 	@PutMapping(path = "api/users/{id}/flowerpot", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> modifyUserFlowerpots(@PathVariable("id") Integer id, @RequestBody FlowerPot fp) {
 		Optional<User> user = su.findById(id);
-		
+
 		try {
 			su.addFlowerPot(user.get(), fp);
 			return new ResponseEntity<User>(user.get(), HttpStatus.OK);
@@ -95,8 +108,7 @@ public class ControllerUser {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 
 		}
-			
-			
+
 	}
 
 	@DeleteMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

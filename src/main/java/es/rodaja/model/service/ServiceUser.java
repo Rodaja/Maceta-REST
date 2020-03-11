@@ -161,6 +161,16 @@ public class ServiceUser {
 		du.save(u);
 	}
 
+	/**
+	 * This method checks that the user and login objects contain the same email and
+	 * password
+	 * 
+	 * @param user  The user persisted
+	 * @param login The login object that contains the email and the password
+	 * @return An optional with the user if both have the same email and password or
+	 *         an optional with null value
+	 */
+
 	public Optional<User> checkCredentials(User user, Login login) {
 		String email = user.getEmail();
 
@@ -178,6 +188,19 @@ public class ServiceUser {
 				response = null;
 			}
 		}
+		return response;
+	}
+
+	/**
+	 * This method checks the user API KEY and an API KEY given as a parameter
+	 * 
+	 * @param user The user that contains the valid API KEY
+	 * @param key  The API KEY to be checked
+	 * @return True if both of them are the same, false in the opposite case
+	 */
+	public boolean checkApiKey(User user, String key) {
+		boolean response = user.getApiKey().equals(key) ? true : false;
+
 		return response;
 	}
 }
