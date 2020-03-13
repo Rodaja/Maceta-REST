@@ -36,7 +36,7 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
-			u.setApiKey(us.generateApiKey());
+			u.setApiKey(getUniqueApiKey());
 			du.save(u);
 			response = true;
 		}
@@ -59,6 +59,29 @@ public class ServiceUser {
 		u.setPassword(hashPassword(u.getPassword()));
 
 		return response;
+	}
+	
+	/**
+	 * This method generates a <b>unique string</b> with an API KEY 
+	 * @return The unique API KEY
+	 */
+	private String getUniqueApiKey() {	
+		boolean unique = false;
+		String key = "";
+		
+		do {
+			key = us.generateApiKey();
+			
+			Optional<User> user = du.findByApiKey(key);
+			
+			if (!user.isPresent()) {
+				unique = true;
+			}
+			
+		} while (!unique);
+		
+		return key;
+		
 	}
 
 	/**
