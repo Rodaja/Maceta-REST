@@ -10,4 +10,6 @@ import es.rodaja.model.entity.User;
 public interface DaoUser extends JpaRepository<User, Integer> {
 
 	public Optional<User> findByEmail(String email);
+	public Optional<User> findByApiKey(String key);
+	
 }
