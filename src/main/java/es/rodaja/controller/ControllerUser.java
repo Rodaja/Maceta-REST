@@ -98,7 +98,8 @@ public class ControllerUser {
 	}
 
 	@PutMapping(path = "api/users/{id}/flowerpot", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> modifyUserFlowerpots(@PathVariable("id") Integer id, @RequestBody FlowerPot fp) {
+	public ResponseEntity<User> modifyUserFlowerpots(@PathVariable("id") Integer id, @RequestBody FlowerPot fp,
+			@RequestHeader("Api-Key") String key) {
 		Optional<User> user = su.findById(id);
 
 		try {
@@ -112,12 +113,17 @@ public class ControllerUser {
 	}
 
 	@DeleteMapping(path = "api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+	public ResponseEntity<String> delete(@PathVariable("id") Integer id, @RequestHeader("Api-Key") String key) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent()) {
-			su.delete(id);
-			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+			if (su.checkApiKey(user.get(), key)) {
+				su.delete(id);
+				return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+			}
+
 		} else {
 			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);
 		}
@@ -125,12 +131,16 @@ public class ControllerUser {
 
 	@DeleteMapping(path = "api/users/{id}/flowerpot/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteUserFlowerpot(@PathVariable("id") Integer id,
-			@PathVariable("macAddress") String macAddress) {
+			@PathVariable("macAddress") String macAddress, @RequestHeader("Api-Key") String key) {
 		Optional<User> user = su.findById(id);
 
 		if (user.isPresent() && !macAddress.isEmpty()) {
-			su.removeFlowerPot(user.get(), macAddress);
-			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+			if (su.checkApiKey(user.get(), key)) {
+				su.removeFlowerPot(user.get(), macAddress);
+				return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+			}
 		} else {
 			return new ResponseEntity<String>("NOT Deleted", HttpStatus.NOT_FOUND);
 		}
