@@ -20,6 +20,7 @@ public class User {
 	private int id;
 	@Column(nullable = false, unique= true)
 	private String email;
+	private String userName;
 	private String name;
 	private String firstSurname;
 	private String secondSurname;
@@ -117,6 +118,14 @@ public class User {
 
 	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@Override
