@@ -22,8 +22,7 @@ public class User {
 	private String email;
 	private String userName;
 	private String name;
-	private String firstSurname;
-	private String secondSurname;
+	private String surname;
 	private String password;
 	private String country;
 	@Column(unique= true)
@@ -35,13 +34,13 @@ public class User {
 	public User() {
 	}
 
-	public User(String email, String name, String firstSurname, String secondSurname, String password, String country,
+	public User(String email, String userName, String name, String surname, String password, String country,
 			String apiKey, List<FlowerPot> listFlowerPots) {
 		super();
 		this.email = email;
+		this.userName = userName;
 		this.name = name;
-		this.firstSurname = firstSurname;
-		this.secondSurname = secondSurname;
+		this.surname = surname;
 		this.password = password;
 		this.country = country;
 		this.apiKey = apiKey;
@@ -64,6 +63,14 @@ public class User {
 		this.email = email;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -72,20 +79,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getFirstSurname() {
-		return firstSurname;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setFirstSurname(String firstSurname) {
-		this.firstSurname = firstSurname;
-	}
-
-	public String getSecondSurname() {
-		return secondSurname;
-	}
-
-	public void setSecondSurname(String secondSurname) {
-		this.secondSurname = secondSurname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getPassword() {
@@ -104,14 +103,6 @@ public class User {
 		this.country = country;
 	}
 
-	public List<FlowerPot> getListFlowerPots() {
-		return listFlowerPots;
-	}
-
-	public void setListFlowerPots(List<FlowerPot> listFlowerPots) {
-		this.listFlowerPots = listFlowerPots;
-	}
-
 	public String getApiKey() {
 		return apiKey;
 	}
@@ -120,21 +111,21 @@ public class User {
 		this.apiKey = apiKey;
 	}
 
-	public String getUserName() {
-		return userName;
+	public List<FlowerPot> getListFlowerPots() {
+		return listFlowerPots;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setListFlowerPots(List<FlowerPot> listFlowerPots) {
+		this.listFlowerPots = listFlowerPots;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", name=" + name + ", firstSurname=" + firstSurname
-				+ ", secondSurname=" + secondSurname + ", password=" + password + ", country=" + country + ", apiKey="
-				+ apiKey + ", listFlowerPots=" + listFlowerPots + "]";
+		return "User [id=" + id + ", email=" + email + ", userName=" + userName + ", name=" + name + ", surname="
+				+ surname + ", password=" + password + ", country=" + country + ", apiKey=" + apiKey
+				+ ", listFlowerPots=" + listFlowerPots + "]";
 	}
-
-
+	
+	
 
 }

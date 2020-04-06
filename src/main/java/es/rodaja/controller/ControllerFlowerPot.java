@@ -52,6 +52,7 @@ public class ControllerFlowerPot {
 
 	}
 	
+	/*
 	@DeleteMapping(path = "api/flowerpots/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> delete(@PathVariable("macAddress") String macAddress) {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
@@ -63,4 +64,5 @@ public class ControllerFlowerPot {
 			return new ResponseEntity<String>("NOT Deleted",HttpStatus.NOT_FOUND);
 		}
 	}
+	*/
 }
