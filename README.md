@@ -27,7 +27,8 @@ User structure with example adding flowerpots to it:
 http://url/api/users  
 This method is used to register a new user in to the database, it has to receive a JSON with the following information:  
 <p align="center"><img src="https://github.com/Rodaja/Maceta-REST/blob/master/doc/img/JSON_User_Type.png" height="400"/></p> 
-It returns a JSON that has all the information provided.
+It returns a JSON that has all the information provided.   
+
 ### GET methods
 **Get all the users saved in the database**.  
 http://url/api/users  
@@ -48,14 +49,38 @@ This method is used to delete a user by its ID, it recives in the URL the user I
 
 ## Flowerpot Routes 
 ### POST methods
-http://url/api/flowerpots
-
+http://url/api/flowerpots  
+This method creates a new flowerpot in the database, it needs to receive a JSON with the information of the flowerpot, it´s obligatory to send the MAC address in the JSON.
+```
+Example
+```
 ### GET methods
-http://url/api/flowerpots
+http://url/api/flowerpots  
+This methods retruns the a JSON with all the flowerpots saved in the database.
+```
+Example
+```
 ### PUT methods
-http://url/api/flowerpots/macAddress
+http://url/api/flowerpots/macAddress   
+This method modifies the fields of a given flowerpot, it has to receive a JSON with de data.
+```
+Example
+```
 ### DELETE methods
 http://url/api/flowerpots/macAddress  
 This method is used to delete a flowerpot by its MAC address.
 
+## Login Routes 
+### GET methods
+http://url/api/login  
+This method is used to login in the API, it needs a user and a password to get in.
+```
+Example
+```
+## Reset Password Routes 
+### GET methods
+http://url/api/resetPassword  
+```
+Example
+```
 ## License <a name="license"></a>
