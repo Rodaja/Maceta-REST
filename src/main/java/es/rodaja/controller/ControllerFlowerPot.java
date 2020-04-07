@@ -20,10 +20,10 @@ import es.rodaja.model.service.ServiceFlowerPot;
 
 @RestController
 public class ControllerFlowerPot {
-	
+
 	@Autowired
 	private ServiceFlowerPot sf;
-	
+
 	@PostMapping(path = "api/flowerpots", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FlowerPot> save(@RequestBody FlowerPot fp) {
 		if (sf.save(fp)) {
@@ -40,12 +40,15 @@ public class ControllerFlowerPot {
 	}
 
 	@PutMapping(path = "api/flowerpots/{macAddress}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FlowerPot> modify(@PathVariable("macAddress") String macAddress, @RequestBody FlowerPot flowerpotModified) {
+	public ResponseEntity<FlowerPot> modify(@PathVariable("macAddress") String macAddress,
+			@RequestBody FlowerPot flowerpotModified) {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
 		if (flowerpot.isPresent()) {
 			String flowerpotName = flowerpot.get().getName();
-			flowerpotModified.setName(flowerpotName);
+			if (flowerpotName == null) {
+				flowerpotModified.setName(flowerpotName);
+			}
 			sf.modify(flowerpotModified);
 			return new ResponseEntity<FlowerPot>(flowerpotModified, HttpStatus.OK);
 		} else {
@@ -53,18 +56,15 @@ public class ControllerFlowerPot {
 		}
 
 	}
-	
-	/*
-	@DeleteMapping(path = "api/flowerpots/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> delete(@PathVariable("macAddress") String macAddress) {
-		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
-		if (flowerpot.isPresent()) {
-			sf.delete(macAddress);
-			return new ResponseEntity<String>("Deleted", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("NOT Deleted",HttpStatus.NOT_FOUND);
-		}
-	}
-	*/
+	/*
+	 * @DeleteMapping(path = "api/flowerpots/{macAddress}", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<String>
+	 * delete(@PathVariable("macAddress") String macAddress) { Optional<FlowerPot>
+	 * flowerpot = sf.findByMacAddress(macAddress);
+	 * 
+	 * if (flowerpot.isPresent()) { sf.delete(macAddress); return new
+	 * ResponseEntity<String>("Deleted", HttpStatus.OK); } else { return new
+	 * ResponseEntity<String>("NOT Deleted",HttpStatus.NOT_FOUND); } }
+	 */
 }
