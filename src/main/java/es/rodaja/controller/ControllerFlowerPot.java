@@ -44,6 +44,8 @@ public class ControllerFlowerPot {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
 		if (flowerpot.isPresent()) {
+			String flowerpotName = flowerpot.get().getName();
+			flowerpotModified.setName(flowerpotName);
 			sf.modify(flowerpotModified);
 			return new ResponseEntity<FlowerPot>(flowerpotModified, HttpStatus.OK);
 		} else {
