@@ -12,20 +12,18 @@ public class FlowerPot {
 	private String macAddress;
 	private String name;
 	private int groundHumidity; 
-	private int brightness;
 	private int airHumidity;
 	private int airTemperature;
 	
 	public FlowerPot() {
 	}
 
-	public FlowerPot(String macAddress, String name, int groundHumidity, int brightness, int airHumidity,
+	public FlowerPot(String macAddress, String name, int groundHumidity, int airHumidity,
 			int airTemperature) {
 		super();
 		this.macAddress = macAddress;
 		this.name = name;
 		this.groundHumidity = groundHumidity;
-		this.brightness = brightness;
 		this.airHumidity = airHumidity;
 		this.airTemperature = airTemperature;
 	}
@@ -54,14 +52,6 @@ public class FlowerPot {
 		this.groundHumidity = groundHumidity;
 	}
 
-	public int getBrightness() {
-		return brightness;
-	}
-
-	public void setBrightness(int brightness) {
-		this.brightness = brightness;
-	}
-
 	public int getAirHumidity() {
 		return airHumidity;
 	}
@@ -81,7 +71,7 @@ public class FlowerPot {
 	@Override
 	public String toString() {
 		return "FlowerPot [macAddress=" + macAddress + ", name=" + name + ", groundHumidity=" + groundHumidity
-				+ ", brightness=" + brightness + ", airHumidity=" + airHumidity + ", airTemperature=" + airTemperature
+				+ ", airHumidity=" + airHumidity + ", airTemperature=" + airTemperature
 				+ "]";
 	}
 	
