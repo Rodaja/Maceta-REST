@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.rodaja.model.entity.FlowerPot;
@@ -45,11 +46,19 @@ public class ControllerFlowerPot {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
 		if (flowerpot.isPresent()) {
-			String flowerpotName = flowerpot.get().getName();
-			if (flowerpotName == null) {
-				flowerpotModified.setName(flowerpotName);
+			if (flowerpotModified.getName() != null) {
+				System.out.println(flowerpotModified.getName());
+				flowerpot.get().setName(flowerpotModified.getName());
+				sf.modify(flowerpot.get());
+			} else {
+				String flowerpotName = flowerpot.get().getName();
+				System.out.println(flowerpotName);
+				if (flowerpotModified.getName() == null) {
+					flowerpotModified.setName(flowerpotName);
+				}
+				sf.modify(flowerpotModified);
 			}
-			sf.modify(flowerpotModified);
+			
 			return new ResponseEntity<FlowerPot>(flowerpotModified, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<FlowerPot>(HttpStatus.NOT_FOUND);
