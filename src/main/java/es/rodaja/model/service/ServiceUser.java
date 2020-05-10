@@ -37,6 +37,7 @@ public class ServiceUser {
 
 		if (checkUserData(u)) {
 			// Hash the user password
+			checkNullValues(u);
 			u.setPassword(hashPassword(u.getPassword()));
 			u.setApiKey(getUniqueApiKey());
 			du.save(u);
@@ -44,6 +45,25 @@ public class ServiceUser {
 		}
 
 		return response;
+	}
+
+	/**
+	 * This method set all the null values to "" or 0
+	 * @param u The user to check
+	 */
+	private void checkNullValues(User u) {
+		if (u.getName() == null) {
+			u.setName("");
+		}
+		if (u.getSurname() == null) {
+			u.setSurname("");
+		}
+		if (u.getUserName() == null) {
+			u.setUserName("");
+		}
+		if (u.getCountry() == null) {
+			u.setCountry("");
+		}
 	}
 
 	/**
@@ -138,6 +158,7 @@ public class ServiceUser {
 				// Hash the user password
 				u.setPassword(hashPassword(u.getPassword()));
 			}
+			checkNullValues(u);
 			
 			du.save(u);
 			response = true;
