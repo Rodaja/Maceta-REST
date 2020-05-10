@@ -47,12 +47,10 @@ public class ControllerFlowerPot {
 
 		if (flowerpot.isPresent()) {
 			if (flowerpotModified.getName() != null) {
-				System.out.println(flowerpotModified.getName());
 				flowerpot.get().setName(flowerpotModified.getName());
 				sf.modify(flowerpot.get());
 			} else {
 				String flowerpotName = flowerpot.get().getName();
-				System.out.println(flowerpotName);
 				if (flowerpotModified.getName() == null) {
 					flowerpotModified.setName(flowerpotName);
 				}
