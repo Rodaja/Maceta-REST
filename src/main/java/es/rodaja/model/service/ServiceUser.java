@@ -36,6 +36,8 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
+			// Hash the user password
+			u.setPassword(hashPassword(u.getPassword()));
 			u.setApiKey(getUniqueApiKey());
 			du.save(u);
 			response = true;
@@ -54,10 +56,6 @@ public class ServiceUser {
 		String email = u.getEmail();
 		String passwd = u.getPassword();
 		boolean response = !email.isEmpty() && !passwd.isEmpty() ? true : false;
-
-		// Hash the user password
-		u.setPassword(hashPassword(u.getPassword()));
-
 		return response;
 	}
 	
@@ -135,10 +133,28 @@ public class ServiceUser {
 		boolean response = false;
 
 		if (checkUserData(u)) {
+			
+			if (checkPasswordChanged(u)) {
+				// Hash the user password
+				u.setPassword(hashPassword(u.getPassword()));
+			}
+			
 			du.save(u);
 			response = true;
 		}
 
+		return response;
+	}
+
+	private boolean checkPasswordChanged(User u) {
+		boolean response = false;
+		
+		Optional<User> userDataBase = du.findById(u.getId());
+		
+		if (userDataBase.isPresent() && !userDataBase.get().getPassword().equals(u.getPassword())) {
+			response = true;
+		}
+		
 		return response;
 	}
 

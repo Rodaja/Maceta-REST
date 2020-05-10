@@ -30,11 +30,18 @@ public class ControllerUser {
 
 	@PostMapping(path = "api/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> save(@RequestBody User u) {
-		if (su.save(u)) {
-			return new ResponseEntity<User>(u, HttpStatus.CREATED);
+		Optional<User> userDataBase = su.findByEmail(u.getEmail());
+		
+		if (!userDataBase.isPresent()) {
+			if (su.save(u)) {
+				return new ResponseEntity<User>(u, HttpStatus.CREATED);
+			} else {
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			}
 		} else {
-			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<User>(HttpStatus.CONFLICT);	
 		}
+		
 	}
 
 	@GetMapping(path = "api/users", produces = MediaType.APPLICATION_JSON_VALUE)
