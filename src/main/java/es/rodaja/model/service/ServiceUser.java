@@ -1,6 +1,7 @@
 package es.rodaja.model.service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +64,9 @@ public class ServiceUser {
 		}
 		if (u.getCountry() == null) {
 			u.setCountry("");
+		}
+		if (u.getListFlowerPots() == null) {
+			u.setListFlowerPots(new ArrayList<FlowerPot>());
 		}
 	}
 

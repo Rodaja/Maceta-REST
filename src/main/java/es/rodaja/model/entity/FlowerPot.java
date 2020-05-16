@@ -10,10 +10,12 @@ public class FlowerPot {
 
 	@Id
 	private String macAddress;
+	private String version;
 	private String name;
 	private int groundHumidity; 
 	private int airHumidity;
 	private int airTemperature;
+	private boolean water;
 	
 	public FlowerPot() {
 	}
@@ -68,13 +70,28 @@ public class FlowerPot {
 		this.airTemperature = airTemperature;
 	}
 
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public boolean isWater() {
+		return water;
+	}
+
+	public void setWater(boolean water) {
+		this.water = water;
+	}
+
 	@Override
 	public String toString() {
-		return "FlowerPot [macAddress=" + macAddress + ", name=" + name + ", groundHumidity=" + groundHumidity
-				+ ", airHumidity=" + airHumidity + ", airTemperature=" + airTemperature
-				+ "]";
+		return "FlowerPot [macAddress=" + macAddress + ", version=" + version + ", name=" + name + ", groundHumidity="
+				+ groundHumidity + ", airHumidity=" + airHumidity + ", airTemperature=" + airTemperature + ", water="
+				+ water + "]";
 	}
-	
-	
+		
 	
 }

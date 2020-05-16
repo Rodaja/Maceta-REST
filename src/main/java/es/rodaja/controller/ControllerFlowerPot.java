@@ -26,12 +26,21 @@ public class ControllerFlowerPot {
 	private ServiceFlowerPot sf;
 
 	@PostMapping(path = "api/flowerpots", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FlowerPot> save(@RequestBody FlowerPot fp) {
-		if (sf.save(fp)) {
-			return new ResponseEntity<FlowerPot>(fp, HttpStatus.CREATED);
+	public ResponseEntity<FlowerPot> save(@RequestBody FlowerPot flowerpot) {
+		Optional<FlowerPot> flowerpotDataBase = sf.findByMacAddress(flowerpot.getMacAddress());
+		
+		if (flowerpotDataBase.isPresent()) {
+			flowerpot.setName(flowerpotDataBase.get().getName());
+			return new ResponseEntity<FlowerPot>(flowerpot, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<FlowerPot>(HttpStatus.BAD_REQUEST);
+			if (sf.save(flowerpot)) {
+				return new ResponseEntity<FlowerPot>(flowerpot, HttpStatus.CREATED);
+			} else {
+				return new ResponseEntity<FlowerPot>(HttpStatus.BAD_REQUEST);
+			}
+		
 		}
+	
 	}
 
 	@GetMapping(path = "api/flowerpots", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,9 +60,7 @@ public class ControllerFlowerPot {
 				sf.modify(flowerpot.get());
 			} else {
 				String flowerpotName = flowerpot.get().getName();
-				if (flowerpotModified.getName() == null) {
-					flowerpotModified.setName(flowerpotName);
-				}
+				flowerpotModified.setName(flowerpotName);
 				sf.modify(flowerpotModified);
 			}
 			
