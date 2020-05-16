@@ -49,6 +49,18 @@ public class ControllerFlowerPot {
 		return new ResponseEntity<List<FlowerPot>>(flowerpots, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "api/flowerpots/{macAddress}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<FlowerPot> findByMacAddress(@PathVariable("macAddress") String macAddress) {
+		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
+		if (flowerpot.isPresent()) {
+			return new ResponseEntity<FlowerPot>(flowerpot.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<FlowerPot>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
+
+	
 	@PutMapping(path = "api/flowerpots/{macAddress}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FlowerPot> modify(@PathVariable("macAddress") String macAddress,
 			@RequestBody FlowerPot flowerpotModified) {
