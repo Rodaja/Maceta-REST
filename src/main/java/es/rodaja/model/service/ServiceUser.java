@@ -15,6 +15,7 @@ import com.google.common.hash.Hashing;
 import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.Login;
 import es.rodaja.model.entity.User;
+import es.rodaja.model.entity.UserConfiguration;
 import es.rodaja.model.persistence.DaoUser;
 import es.rodaja.model.security.UserSecurity;
 
@@ -67,6 +68,9 @@ public class ServiceUser {
 		}
 		if (u.getListFlowerPots() == null) {
 			u.setListFlowerPots(new ArrayList<FlowerPot>());
+		}
+		if (u.getUserConfiguration() == null) {
+			u.setUserConfiguration(new UserConfiguration());
 		}
 	}
 

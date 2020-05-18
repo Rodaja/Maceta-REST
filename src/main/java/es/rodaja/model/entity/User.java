@@ -27,6 +27,7 @@ public class User {
 	private String country;
 	@Column(unique= true)
 	private String apiKey;
+	private UserConfiguration userConfiguration;
 
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<FlowerPot> listFlowerPots;
@@ -35,7 +36,7 @@ public class User {
 	}
 
 	public User(String email, String userName, String name, String surname, String password, String country,
-			String apiKey, List<FlowerPot> listFlowerPots) {
+			String apiKey, List<FlowerPot> listFlowerPots, UserConfiguration userConfiguration) {
 		super();
 		this.email = email;
 		this.userName = userName;
@@ -45,6 +46,7 @@ public class User {
 		this.country = country;
 		this.apiKey = apiKey;
 		this.listFlowerPots = listFlowerPots;
+		this.userConfiguration = userConfiguration;
 	}
 
 	public int getId() {
@@ -119,13 +121,19 @@ public class User {
 		this.listFlowerPots = listFlowerPots;
 	}
 
+	public UserConfiguration getUserConfiguration() {
+		return userConfiguration;
+	}
+
+	public void setUserConfiguration(UserConfiguration userConfiguration) {
+		this.userConfiguration = userConfiguration;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", userName=" + userName + ", name=" + name + ", surname="
 				+ surname + ", password=" + password + ", country=" + country + ", apiKey=" + apiKey
-				+ ", listFlowerPots=" + listFlowerPots + "]";
+				+ ", userConfiguration=" + userConfiguration + ", listFlowerPots=" + listFlowerPots + "]";
 	}
-	
-	
 
 }
