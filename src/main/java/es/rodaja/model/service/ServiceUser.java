@@ -15,7 +15,6 @@ import com.google.common.hash.Hashing;
 import es.rodaja.model.entity.FlowerPot;
 import es.rodaja.model.entity.Login;
 import es.rodaja.model.entity.User;
-import es.rodaja.model.entity.UserConfiguration;
 import es.rodaja.model.persistence.DaoUser;
 import es.rodaja.model.security.UserSecurity;
 
@@ -40,6 +39,7 @@ public class ServiceUser {
 		if (checkUserData(u)) {
 			// Hash the user password
 			checkNullValues(u);
+			setDefaultConfoguration(u);
 			u.setPassword(hashPassword(u.getPassword()));
 			u.setApiKey(getUniqueApiKey());
 			du.save(u);
@@ -47,6 +47,19 @@ public class ServiceUser {
 		}
 
 		return response;
+	}
+
+	/**
+	 * This method set the default configuration for a given user
+	 * Temperature = celsius
+	 * Theme = light
+	 * Notifications = false
+	 * @param user The given user
+	 */
+	private void setDefaultConfoguration(User user) {
+		user.setTemperature("celsius");
+		user.setTheme("light");
+		user.setNotifications(false);
 	}
 
 	/**
@@ -68,9 +81,6 @@ public class ServiceUser {
 		}
 		if (u.getListFlowerPots() == null) {
 			u.setListFlowerPots(new ArrayList<FlowerPot>());
-		}
-		if (u.getUserConfiguration() == null) {
-			u.setUserConfiguration(new UserConfiguration());
 		}
 	}
 

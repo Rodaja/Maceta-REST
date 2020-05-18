@@ -27,8 +27,11 @@ public class User {
 	private String country;
 	@Column(unique= true)
 	private String apiKey;
-	private UserConfiguration userConfiguration;
-
+	
+	private String temperature;
+	private String theme;
+	private boolean notifications; 
+	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<FlowerPot> listFlowerPots;
 
@@ -36,7 +39,7 @@ public class User {
 	}
 
 	public User(String email, String userName, String name, String surname, String password, String country,
-			String apiKey, List<FlowerPot> listFlowerPots, UserConfiguration userConfiguration) {
+			String apiKey, List<FlowerPot> listFlowerPots, String temperature, String theme, boolean notifications) {
 		super();
 		this.email = email;
 		this.userName = userName;
@@ -46,7 +49,9 @@ public class User {
 		this.country = country;
 		this.apiKey = apiKey;
 		this.listFlowerPots = listFlowerPots;
-		this.userConfiguration = userConfiguration;
+		this.temperature = temperature;
+		this.theme = theme;
+		this.notifications = notifications;
 	}
 
 	public int getId() {
@@ -121,19 +126,35 @@ public class User {
 		this.listFlowerPots = listFlowerPots;
 	}
 
-	public UserConfiguration getUserConfiguration() {
-		return userConfiguration;
+	public String getTemperature() {
+		return temperature;
 	}
 
-	public void setUserConfiguration(UserConfiguration userConfiguration) {
-		this.userConfiguration = userConfiguration;
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public boolean isNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(boolean notifications) {
+		this.notifications = notifications;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", userName=" + userName + ", name=" + name + ", surname="
 				+ surname + ", password=" + password + ", country=" + country + ", apiKey=" + apiKey
-				+ ", userConfiguration=" + userConfiguration + ", listFlowerPots=" + listFlowerPots + "]";
+				+ ", listFlowerPots=" + listFlowerPots + ", temperature=" + temperature + ", theme=" + theme
+				+ ", notifications=" + notifications + "]";
 	}
-
 }
