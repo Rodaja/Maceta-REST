@@ -12,6 +12,7 @@ public class FlowerPot {
 	private String macAddress;
 	private String version;
 	private String name;
+	private String imageUrl;
 	private int groundHumidity; 
 	private int airHumidity;
 	private int airTemperature;
@@ -20,15 +21,20 @@ public class FlowerPot {
 	public FlowerPot() {
 	}
 
-	public FlowerPot(String macAddress, String name, int groundHumidity, int airHumidity,
-			int airTemperature) {
+	
+	public FlowerPot(String macAddress, String version, String name, String imageUrl, int groundHumidity,
+			int airHumidity, int airTemperature, boolean water) {
 		super();
 		this.macAddress = macAddress;
+		this.version = version;
 		this.name = name;
+		this.imageUrl = imageUrl;
 		this.groundHumidity = groundHumidity;
 		this.airHumidity = airHumidity;
 		this.airTemperature = airTemperature;
+		this.water = water;
 	}
+
 
 	public String getMacAddress() {
 		return macAddress;
@@ -38,12 +44,28 @@ public class FlowerPot {
 		this.macAddress = macAddress;
 	}
 
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public int getGroundHumidity() {
@@ -70,14 +92,6 @@ public class FlowerPot {
 		this.airTemperature = airTemperature;
 	}
 
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
 	public boolean isWater() {
 		return water;
 	}
@@ -88,10 +102,9 @@ public class FlowerPot {
 
 	@Override
 	public String toString() {
-		return "FlowerPot [macAddress=" + macAddress + ", version=" + version + ", name=" + name + ", groundHumidity="
-				+ groundHumidity + ", airHumidity=" + airHumidity + ", airTemperature=" + airTemperature + ", water="
-				+ water + "]";
-	}
-		
+		return "FlowerPot [macAddress=" + macAddress + ", version=" + version + ", name=" + name + ", imageUrl="
+				+ imageUrl + ", groundHumidity=" + groundHumidity + ", airHumidity=" + airHumidity + ", airTemperature="
+				+ airTemperature + ", water=" + water + "]";
+	}	
 	
 }
