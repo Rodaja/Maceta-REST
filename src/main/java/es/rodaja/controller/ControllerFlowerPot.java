@@ -31,6 +31,7 @@ public class ControllerFlowerPot {
 		
 		if (flowerpotDataBase.isPresent()) {
 			flowerpot.setName(flowerpotDataBase.get().getName());
+			flowerpot.setImageUrl(flowerpotDataBase.get().getImageUrl());
 			return new ResponseEntity<FlowerPot>(flowerpot, HttpStatus.CREATED);
 		} else {
 			if (sf.save(flowerpot)) {
@@ -67,14 +68,9 @@ public class ControllerFlowerPot {
 		Optional<FlowerPot> flowerpot = sf.findByMacAddress(macAddress);
 
 		if (flowerpot.isPresent()) {
-			if (flowerpotModified.getName() != null) {
-				flowerpot.get().setName(flowerpotModified.getName());
-				sf.modify(flowerpot.get());
-			} else {
-				String flowerpotName = flowerpot.get().getName();
-				flowerpotModified.setName(flowerpotName);
-				sf.modify(flowerpotModified);
-			}
+			FlowerPot flowerpotDataBase = flowerpot.get();
+			
+			sf.modify(sf.checkData(flowerpotDataBase, flowerpotModified));
 			
 			return new ResponseEntity<FlowerPot>(flowerpotModified, HttpStatus.OK);
 		} else {

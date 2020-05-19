@@ -27,11 +27,27 @@ public class ServiceFlowerPot {
 		boolean response = false;
 
 		if (checkFlowerPot(fp)) {
+			checkNullValues(fp);
 			dfp.save(fp);
 			response = true;
 		}
 
 		return response;
+	}
+
+	/**
+	 * This method check all the null values and gives to them a default one
+	 * 
+	 * @param fp The flowerpot to check
+	 */
+	private void checkNullValues(FlowerPot fp) {
+		if (fp.getImageUrl() == null) {
+			fp.setImageUrl("");
+		}
+
+		if (fp.getName() == null) {
+			fp.setName("Gardenia");
+		}
 	}
 
 	/**
@@ -90,8 +106,8 @@ public class ServiceFlowerPot {
 	}
 
 	/**
-	 * This method deletes a flowerpot by its mac address
-	 * We use transational to allow to remove the flowerpot
+	 * This method deletes a flowerpot by its mac address We use transational to
+	 * allow to remove the flowerpot
 	 * 
 	 * @param id The mac address of the flowerpot to be removed
 	 */
@@ -99,4 +115,17 @@ public class ServiceFlowerPot {
 	public void delete(String macAddress) {
 		dfp.deleteByMacAddressIgnoreCase(macAddress);
 	}
+
+	public FlowerPot checkData(FlowerPot fpDataBase, FlowerPot fpModified) {
+		
+		if (fpModified.getName() == null) {
+			fpModified.setName(fpDataBase.getName());
+		}
+		if (fpModified.getImageUrl() == null) {
+			fpModified.setImageUrl(fpDataBase.getImageUrl());
+		}
+		return fpModified;
+
+	}
+
 }
