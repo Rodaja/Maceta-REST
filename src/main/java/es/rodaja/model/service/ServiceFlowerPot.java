@@ -116,6 +116,12 @@ public class ServiceFlowerPot {
 		dfp.deleteByMacAddressIgnoreCase(macAddress);
 	}
 
+	/**
+	 * This method checks that the name and the image URL are not null
+	 * @param fpDataBase The flowerpot saved in the database
+	 * @param fpModified The flowerpot that has been modified
+	 * @return A flowerpot with all the fields updated
+	 */
 	public FlowerPot checkData(FlowerPot fpDataBase, FlowerPot fpModified) {
 		
 		if (fpModified.getName() == null) {
@@ -127,5 +133,22 @@ public class ServiceFlowerPot {
 		return fpModified;
 
 	}
+
+	/**
+	 * This method check that the version of the Arduino is the same as the version of the server, it returns true if the Arduino needs an update, false otherwise
+	 * @param arduinoVersion The arduino version
+	 * @param currentVersion The last version of the code provided by the server
+	 * @return True if the arduino needs an update, false otherwises
+	 */
+	public boolean checkArduinoVersion(String arduinoVersion, String currentVersion) {
+		boolean response = false;
+		if (!arduinoVersion.equalsIgnoreCase(currentVersion)) {
+			response = true;
+		} 
+		
+		return response;
+	}
+
+
 
 }

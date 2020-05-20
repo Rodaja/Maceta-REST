@@ -3,8 +3,11 @@ package es.rodaja.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +38,7 @@ public class ControllerFlowerPot {
 	@PostMapping(path = "api/flowerpots", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FlowerPot> save(@RequestBody FlowerPot flowerpot) {
 		Optional<FlowerPot> flowerpotDataBase = sf.findByMacAddress(flowerpot.getMacAddress());
-		
+
 		if (flowerpotDataBase.isPresent()) {
 			flowerpot.setName(flowerpotDataBase.get().getName());
 			flowerpot.setImageUrl(flowerpotDataBase.get().getImageUrl());
@@ -45,9 +49,9 @@ public class ControllerFlowerPot {
 			} else {
 				return new ResponseEntity<FlowerPot>(HttpStatus.BAD_REQUEST);
 			}
-		
+
 		}
-	
+
 	}
 
 	@GetMapping(path = "api/flowerpots", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,45 +68,49 @@ public class ControllerFlowerPot {
 		} else {
 			return new ResponseEntity<FlowerPot>(HttpStatus.NOT_FOUND);
 		}
-		
+
 	}
-	
+
 	@GetMapping(path = "api/flowerpots/update", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> updateSystem() {
-		File file = new File("/Users/javi/Desktop/code.bin");
-		
+	public ResponseEntity<Resource> updateSystem(/*@RequestHeader("Version")String arduinoVersion*/) {
+
+		Properties prop = new Properties();
+		InputStream is = null;
+		File file = null;
 		InputStreamResource resource = null;
 		try {
+
+			is = new FileInputStream("src/main/resources/arduino.properties");
+			prop.load(is);
+
+			String fileUrl = prop.getProperty("path");
+			String currentVersion = prop.getProperty("version");
+			
+			file = new File(fileUrl);
+
 			resource = new InputStreamResource(new FileInputStream(file));
-		} catch (FileNotFoundException e) {
+			
+			System.out.println(file.getAbsolutePath());
+
+			//String contentType = "application/octet-stream";
+
+			
+			//sf.checkArduinoVersion(arduinoVersion, currentVersion)
+			
+			System.out.println("Sended");
+			return ResponseEntity.ok().contentLength(file.length())
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+					.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Bad Request");
+			return new ResponseEntity<Resource>(HttpStatus.BAD_REQUEST);
 		}
-		
-		System.out.println(file.getAbsolutePath());
-		
-		String contentType = null;
-//        try {
-//            contentType = file.getAbsolutePath();
-//        } catch (Exception e) {
-//            System.out.println("Could not determine file type.");
-//        }
-		
 
-       
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
-        System.out.println(contentType);
-        
-        return ResponseEntity.ok()
-        .contentLength(file.length())
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-        .contentType(MediaType.APPLICATION_OCTET_STREAM)
-        .body(resource);
+		
 	}
 
-	
 	@PutMapping(path = "api/flowerpots/{macAddress}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FlowerPot> modify(@PathVariable("macAddress") String macAddress,
 			@RequestBody FlowerPot flowerpotModified) {
@@ -110,9 +118,9 @@ public class ControllerFlowerPot {
 
 		if (flowerpot.isPresent()) {
 			FlowerPot flowerpotDataBase = flowerpot.get();
-			
+
 			sf.modify(sf.checkData(flowerpotDataBase, flowerpotModified));
-			
+
 			return new ResponseEntity<FlowerPot>(flowerpotModified, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<FlowerPot>(HttpStatus.NOT_FOUND);
