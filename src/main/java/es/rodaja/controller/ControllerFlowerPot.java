@@ -72,30 +72,16 @@ public class ControllerFlowerPot {
 	}
 
 	@GetMapping(path = "api/flowerpots/update", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> updateSystem(/*@RequestHeader("Version")String arduinoVersion*/) {
-
-		Properties prop = new Properties();
-		InputStream is = null;
+	public ResponseEntity<Resource> updateSystem() {
 		File file = null;
 		InputStreamResource resource = null;
 		try {
 
-			is = new FileInputStream("src/main/resources/arduino.properties");
-			prop.load(is);
-
-			String fileUrl = prop.getProperty("path");
-			String currentVersion = prop.getProperty("version");
-			
-			file = new File(fileUrl);
+			file = new File("/arduino/Maceta-Arduino/code.bin");
 
 			resource = new InputStreamResource(new FileInputStream(file));
 			
 			System.out.println(file.getAbsolutePath());
-
-			//String contentType = "application/octet-stream";
-
-			
-			//sf.checkArduinoVersion(arduinoVersion, currentVersion)
 			
 			System.out.println("Sended");
 			return ResponseEntity.ok().contentLength(file.length())
