@@ -32,7 +32,7 @@ public class User {
 	private String theme;
 	private boolean notifications; 
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<FlowerPot> listFlowerPots;
 
 	public User() {
